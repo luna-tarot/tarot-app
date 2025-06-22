@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content=device-width, initial-scale=1.0 />
   <title>LUNA LINK</title>
   <style>
     body {
@@ -15,32 +15,51 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      overflow: hidden;
     }
-    #intro {
+
+    #intro, #cardArea {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
     }
-    #cardArea {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      text-align: center;
+
+    .breathing-circle {
+      width: 100px;
+      height: 100px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid white;
+      border-radius: 50%;
+      animation: breathe 6s ease-in-out infinite;
+      margin-bottom: 1rem;
     }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.5); opacity: 1; }
+    }
+
+    #breathingText {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.8;
+    }
+
     .card {
       height: 60vh;
       max-width: 80vw;
       margin-bottom: 1vh;
       object-fit: contain;
     }
+
     .subtitle {
       font-size: 1rem;
       margin-bottom: 1rem;
       white-space: pre-line;
     }
+
     .button {
       background: #6a0dad;
       color: white;
@@ -51,9 +70,11 @@
       cursor: pointer;
       transition: box-shadow 0.3s ease-in-out;
     }
+
     .button:hover {
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
     }
+
     .footer {
       margin-top: 1rem;
       font-size: 0.9rem;
@@ -63,12 +84,14 @@
 </head>
 <body>
   <div id="intro">
+    <div class="breathing-circle"></div>
+    <div id="breathingText">吸って…</div>
     <div class="subtitle">心を落ち着けて<br>１枚引いてみましょう</div>
     <button class="button" onclick="drawCard()">カードを引く</button>
     <div class="footer">- LUNA LINK -<br>by INSIGHT TAROT</div>
   </div>
 
-  <div id="cardArea">
+  <div id="cardArea" style="display:none;">
     <img id="cardImage" class="card" src="" alt="">
     <div id="cardInfo" class="subtitle"></div>
     <button class="button" onclick="drawCard()">カードをもう一枚引く</button>
@@ -80,20 +103,8 @@
     const namesJP = ["愚者","魔術師","女教皇","女帝","皇帝","法王","恋人","戦車","力","隠者","運命の輪","正義","吊るされた男","死神","節制","悪魔","塔","星","月","太陽","審判","世界"];
     const namesEN = ["The Fool","The Magician","The High Priestess","The Empress","The Emperor","The Hierophant","The Lovers","The Chariot","Strength","The Hermit","Wheel of Fortune","Justice","The Hanged Man","Death","Temperance","The Devil","The Tower","The Star","The Moon","The Sun","Judgement","The World"];
     for (let i = 0; i < 22; i++) {
-      cards.push({
-        number: i,
-        jp: namesJP[i],
-        en: namesEN[i],
-        image: `cards/${i}-1.png`,
-        pos: "正位置"
-      });
-      cards.push({
-        number: i,
-        jp: namesJP[i],
-        en: namesEN[i],
-        image: `cards/${i}-2.png`,
-        pos: "逆位置"
-      });
+      cards.push({ number: i, jp: namesJP[i], en: namesEN[i], image: `cards/${i}-1.png`, pos: "正位置" });
+      cards.push({ number: i, jp: namesJP[i], en: namesEN[i], image: `cards/${i}-2.png`, pos: "逆位置" });
     }
 
     function drawCard() {
@@ -110,6 +121,15 @@
       image.src = card.image;
       info.innerHTML = `No.${card.number}<br>${card.jp}　${card.pos}<br>${card.en}`;
     }
+
+    // 呼吸テキストアニメーション
+    const text = document.getElementById("breathingText");
+    const steps = ["吸って…", "止めて…", "吐いて…", "止めて…"];
+    let index = 0;
+    setInterval(() => {
+      text.textContent = steps[index];
+      index = (index + 1) % steps.length;
+    }, 3000);
   </script>
 </body>
 </html>
