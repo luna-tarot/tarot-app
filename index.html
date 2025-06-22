@@ -82,7 +82,7 @@
     function drawCard() {
       const number = Math.floor(Math.random() * 22);
       const position = Math.random() < 0.5 ? 1 : 2;
-      const imgSrc = `cards/${number}-${position}.png`;
+      const imgSrc = `cards/${number}-${position}.jpg`;
 
       const positionLabel = position === 1 ? "正位置" : "逆位置";
       const card = tarotCards[number];
