@@ -92,8 +92,8 @@
     .middle {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
-      justify-content: start;
       flex-grow: 1;
       overflow: hidden;
     }
@@ -103,8 +103,8 @@
   <div class="middle">
     <h2 id="instruction">心を落ち着けて
 １枚引いてみましょう</h2>
-    <div id="result"></div>
-    <button onclick="drawCard()">カードを引く</button>
+    <button id="drawButton" onclick="drawCard()">カードを引く</button>
+    <div id="result" style="display:none;"></div>
     <header id="title">- INSIGHT TAROT -</header>
   </div>
   <footer>by LUNA</footer>
@@ -155,8 +155,10 @@
 
       resultDiv.appendChild(img);
       resultDiv.appendChild(textDiv);
+      resultDiv.style.display = 'block';
 
       document.getElementById('instruction').style.display = 'none';
+      document.getElementById('drawButton').style.marginTop = '6px';
     }
   </script>
 </body>
