@@ -3,74 +3,59 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>INSIGHT TAROT</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
+  <title>INSIGHT TAROT - タロットを引く</title>
   <style>
     body {
       background-color: #000;
-      color: #f0e6d2;
-      font-family: 'Noto Serif JP', serif;
+      color: #fff;
+      font-family: "Hiragino Mincho ProN", "游明朝", "Yu Mincho", serif;
       text-align: center;
-      padding: 50px;
+      padding: 40px 20px;
     }
-
     h1 {
-      font-size: 36px;
-      margin-bottom: 40px;
-      letter-spacing: 2px;
+      font-size: 2em;
+      margin-bottom: 1em;
+      letter-spacing: 0.1em;
     }
-
     button {
-      font-size: 20px;
-      padding: 12px 30px;
-      background: none;
-      border: 2px solid #f0e6d2;
-      color: #f0e6d2;
+      background-color: #444;
+      color: #fff;
+      padding: 12px 24px;
+      font-size: 1.1em;
+      border: none;
       cursor: pointer;
-      transition: 0.3s;
+      margin-bottom: 20px;
     }
-
-    button:hover {
-      background-color: #f0e6d2;
-      color: #000;
-    }
-
     img {
-      max-width: 300px;
-      margin-top: 40px;
-      border: 3px solid #f0e6d2;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-    }
-
-    p {
-      margin-top: 20px;
-      font-size: 18px;
-    }
-
-    .fade-in {
+      max-width: 90%;
+      height: auto;
+      margin-bottom: 20px;
       opacity: 0;
-      animation: fadeIn 1s ease-in-out forwards;
+      transition: opacity 1s ease-in-out;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    .fade-in {
+      opacity: 1;
+    }
+    .result-text {
+      font-size: 1.2em;
+      line-height: 1.6;
+      white-space: pre-line;
     }
   </style>
 </head>
 <body>
-  <h1>INSIGHT TAROT</h1>
+  <h1>1枚引いてみましょう</h1>
   <button onclick="drawCard()">カードを引く</button>
   <div id="result"></div>
 
   <script>
-    const tarotCards = [
+    const cards = [
       { number: 0, jp: "愚者", en: "The Fool" },
       { number: 1, jp: "魔術師", en: "The Magician" },
       { number: 2, jp: "女教皇", en: "The High Priestess" },
       { number: 3, jp: "女帝", en: "The Empress" },
       { number: 4, jp: "皇帝", en: "The Emperor" },
-      { number: 5, jp: "教皇", en: "The Hierophant" },
+      { number: 5, jp: "法王", en: "The Hierophant" },
       { number: 6, jp: "恋人", en: "The Lovers" },
       { number: 7, jp: "戦車", en: "The Chariot" },
       { number: 8, jp: "力", en: "Strength" },
@@ -90,17 +75,27 @@
     ];
 
     function drawCard() {
-      const number = Math.floor(Math.random() * 22);
-      const position = Math.random() < 0.5 ? 1 : 2;
-      const imgSrc = `cards/${number}-${position}.jpg`;
+      const card = cards[Math.floor(Math.random() * cards.length)];
+      const isReversed = Math.random() < 0.5;
+      const index = card.number + (isReversed ? '-2' : '-1');
+      const positionLabel = isReversed ? "逆位置" : "正位置";
+      const imgSrc = `cards/${index}.png`;
 
-      const positionLabel = position === 1 ? "正位置" : "逆位置";
-      const card = tarotCards[number];
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '';
 
-      document.getElementById('result').innerHTML = `
-        <img src="${imgSrc}" alt="タロットカード" class="fade-in">
-        <p class="fade-in">No.${card.number}｜${card.jp} - ${card.en}｜${positionLabel}</p>
-      `;
+      const img = document.createElement('img');
+      img.src = imgSrc;
+      img.onload = () => {
+        img.classList.add('fade-in');
+      };
+
+      const textDiv = document.createElement('div');
+      textDiv.className = 'result-text';
+      textDiv.innerText = `No.${card.number}\n${card.jp} - ${card.en}\n${positionLabel}`;
+
+      resultDiv.appendChild(img);
+      resultDiv.appendChild(textDiv);
     }
   </script>
 </body>
