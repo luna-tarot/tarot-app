@@ -2,170 +2,44 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>INSIGHT TAROT</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background-color: #000;
-      color: #fff;
-      font-family: "Hiragino Mincho ProN", "游明朝", "Yu Mincho", serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      box-sizing: border-box;
-      overflow: hidden;
-    }
-
-    #initialContainer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-    }
-
-    #instruction {
-      font-size: 0.95em;
-      color: #ccc;
-      white-space: pre-line;
-      margin-bottom: 10px;
-    }
-
-    button {
-      background-color: transparent;
-      color: #fff;
-      padding: 10px 18px;
-      font-size: 1em;
-      font-weight: bold;
-      border: 1px solid #bb88ff;
-      border-radius: 10px;
-      cursor: pointer;
-      position: relative;
-      z-index: 1;
-    }
-
-    button::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: radial-gradient(circle, rgba(200,150,255,0.3), transparent 70%);
-      border-radius: 10px;
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    button:hover::before {
-      opacity: 1;
-    }
-
-    button:hover {
-      text-shadow: 0 0 8px rgba(255, 200, 255, 0.8);
-    }
-
-    #result {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    #cardImage {
-      width: 60vw;
-      max-width: 280px;
-      height: auto;
-      margin-bottom: 4px;
-      animation: fadeIn 1s ease forwards;
-      opacity: 0;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    #cardText {
-      font-size: 0.9em;
-      line-height: 1.4;
-      white-space: pre-line;
-      margin-bottom: 6px;
-    }
-
-    header {
-      font-size: 0.9em;
-      color: #ccc;
-      margin-top: 6px;
-    }
-
-    footer {
-      font-size: 0.75em;
-      color: #aaa;
-      margin-top: 2px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUNA LINK</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Hiragino Mincho ProN', serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .footer-text {
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+            line-height: 1.6;
+        }
+        .app-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            letter-spacing: 0.1em;
+        }
+        .credit {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
-  <div id="initialContainer">
-    <h2 id="instruction">心を落ち着けて
-１枚引いてみましょう</h2>
-    <button id="drawFirst" onclick="drawCard()">カードを引く</button>
-  </div>
-
-  <div id="result">
-    <img id="cardImage" src="" alt="カード画像">
-    <div id="cardText"></div>
-    <button onclick="drawCard()">もう一度カードを引く</button>
-    <header>- INSIGHT TAROT -</header>
-    <footer>by LUNA</footer>
-  </div>
-
-  <script>
-    const cards = [
-      { number: 0, jp: "愚者", en: "The Fool" },
-      { number: 1, jp: "魔術師", en: "The Magician" },
-      { number: 2, jp: "女教皇", en: "The High Priestess" },
-      { number: 3, jp: "女帝", en: "The Empress" },
-      { number: 4, jp: "皇帝", en: "The Emperor" },
-      { number: 5, jp: "法王", en: "The Hierophant" },
-      { number: 6, jp: "恋人", en: "The Lovers" },
-      { number: 7, jp: "戦車", en: "The Chariot" },
-      { number: 8, jp: "力", en: "Strength" },
-      { number: 9, jp: "隠者", en: "The Hermit" },
-      { number: 10, jp: "運命の輪", en: "Wheel of Fortune" },
-      { number: 11, jp: "正義", en: "Justice" },
-      { number: 12, jp: "吊るされた男", en: "The Hanged Man" },
-      { number: 13, jp: "死神", en: "Death" },
-      { number: 14, jp: "節制", en: "Temperance" },
-      { number: 15, jp: "悪魔", en: "The Devil" },
-      { number: 16, jp: "塔", en: "The Tower" },
-      { number: 17, jp: "星", en: "The Star" },
-      { number: 18, jp: "月", en: "The Moon" },
-      { number: 19, jp: "太陽", en: "The Sun" },
-      { number: 20, jp: "審判", en: "Judgement" },
-      { number: 21, jp: "世界", en: "The World" }
-    ];
-
-    function drawCard() {
-      const card = cards[Math.floor(Math.random() * cards.length)];
-      const isReversed = Math.random() < 0.5;
-      const index = card.number + (isReversed ? '-2' : '-1');
-      const imgSrc = `cards/${index}.png`;
-      const positionLabel = isReversed ? "逆位置" : "正位置";
-
-      document.getElementById('cardImage').src = imgSrc;
-      document.getElementById('cardText').innerText =
-        `No.${card.number}
-${card.jp} - ${card.en}
-${positionLabel}`;
-
-      document.getElementById('initialContainer').style.display = 'none';
-      document.getElementById('result').style.display = 'flex';
-    }
-  </script>
+    <footer>
+        <div class="footer-text">
+            <div class="app-name">- LUNA LINK -</div>
+            <div class="credit">by INSIGHT TAROT</div>
+        </div>
+    </footer>
 </body>
 </html>
