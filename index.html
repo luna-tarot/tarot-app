@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LUNA LINK</title>
   <style>
     body {
@@ -15,22 +15,29 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      overflow: hidden;
+    }
+    #intro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    #cardArea {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
     }
     .card {
       max-height: 60vh;
       max-width: 80vw;
       margin-bottom: 1vh;
     }
-    .title {
-      font-size: 1.5rem;
-      margin: 0.5rem 0;
-      text-align: center;
-    }
     .subtitle {
       font-size: 1rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
+      margin-bottom: 1rem;
     }
     .button {
       background: #6a0dad;
@@ -46,82 +53,43 @@
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
     }
     .footer {
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       font-size: 0.9rem;
       text-align: center;
     }
   </style>
 </head>
 <body>
-  <div id="content">
-    <div class="title">- INSIGHT TAROT -</div>
+  <div id="intro">
     <div class="subtitle">心を落ち着けて<br>１枚引いてみましょう</div>
     <button class="button" onclick="drawCard()">カードを引く</button>
-    <img id="cardImage" class="card" src="" alt="" style="display:none;">
-    <div id="cardInfo" class="subtitle"></div>
     <div class="footer">- LUNA LINK -<br>by INSIGHT TAROT</div>
   </div>
+
+  <div id="cardArea">
+    <img id="cardImage" class="card" src="" alt="">
+    <div id="cardInfo" class="subtitle"></div>
+    <button class="button" onclick="drawCard()">カードをもう一枚引く</button>
+    <div class="footer">- LUNA LINK -<br>by INSIGHT TAROT</div>
+  </div>
+
   <script>
-const cards = [
-  { number: "0", jp: "愚者", en: "The Fool", image: "cards/0-1.png" },
-  { number: "0", jp: "愚者", en: "The Fool", image: "cards/0-2.png" },
-  { number: "1", jp: "魔術師", en: "The Magician", image: "cards/1-1.png" },
-  { number: "1", jp: "魔術師", en: "The Magician", image: "cards/1-2.png" },
-  { number: "2", jp: "女教皇", en: "The High Priestess", image: "cards/2-1.png" },
-  { number: "2", jp: "女教皇", en: "The High Priestess", image: "cards/2-2.png" },
-  { number: "3", jp: "女帝", en: "The Empress", image: "cards/3-1.png" },
-  { number: "3", jp: "女帝", en: "The Empress", image: "cards/3-2.png" },
-  { number: "4", jp: "皇帝", en: "The Emperor", image: "cards/4-1.png" },
-  { number: "4", jp: "皇帝", en: "The Emperor", image: "cards/4-2.png" },
-  { number: "5", jp: "法王", en: "The Hierophant", image: "cards/5-1.png" },
-  { number: "5", jp: "法王", en: "The Hierophant", image: "cards/5-2.png" },
-  { number: "6", jp: "恋人", en: "The Lovers", image: "cards/6-1.png" },
-  { number: "6", jp: "恋人", en: "The Lovers", image: "cards/6-2.png" },
-  { number: "7", jp: "戦車", en: "The Chariot", image: "cards/7-1.png" },
-  { number: "7", jp: "戦車", en: "The Chariot", image: "cards/7-2.png" },
-  { number: "8", jp: "力", en: "Strength", image: "cards/8-1.png" },
-  { number: "8", jp: "力", en: "Strength", image: "cards/8-2.png" },
-  { number: "9", jp: "隠者", en: "The Hermit", image: "cards/9-1.png" },
-  { number: "9", jp: "隠者", en: "The Hermit", image: "cards/9-2.png" },
-  { number: "10", jp: "運命の輪", en: "Wheel of Fortune", image: "cards/10-1.png" },
-  { number: "10", jp: "運命の輪", en: "Wheel of Fortune", image: "cards/10-2.png" },
-  { number: "11", jp: "正義", en: "Justice", image: "cards/11-1.png" },
-  { number: "11", jp: "正義", en: "Justice", image: "cards/11-2.png" },
-  { number: "12", jp: "吊るされた男", en: "The Hanged Man", image: "cards/12-1.png" },
-  { number: "12", jp: "吊るされた男", en: "The Hanged Man", image: "cards/12-2.png" },
-  { number: "13", jp: "死神", en: "Death", image: "cards/13-1.png" },
-  { number: "13", jp: "死神", en: "Death", image: "cards/13-2.png" },
-  { number: "14", jp: "節制", en: "Temperance", image: "cards/14-1.png" },
-  { number: "14", jp: "節制", en: "Temperance", image: "cards/14-2.png" },
-  { number: "15", jp: "悪魔", en: "The Devil", image: "cards/15-1.png" },
-  { number: "15", jp: "悪魔", en: "The Devil", image: "cards/15-2.png" },
-  { number: "16", jp: "塔", en: "The Tower", image: "cards/16-1.png" },
-  { number: "16", jp: "塔", en: "The Tower", image: "cards/16-2.png" },
-  { number: "17", jp: "星", en: "The Star", image: "cards/17-1.png" },
-  { number: "17", jp: "星", en: "The Star", image: "cards/17-2.png" },
-  { number: "18", jp: "月", en: "The Moon", image: "cards/18-1.png" },
-  { number: "18", jp: "月", en: "The Moon", image: "cards/18-2.png" },
-  { number: "19", jp: "太陽", en: "The Sun", image: "cards/19-1.png" },
-  { number: "19", jp: "太陽", en: "The Sun", image: "cards/19-2.png" },
-  { number: "20", jp: "審判", en: "Judgement", image: "cards/20-1.png" },
-  { number: "20", jp: "審判", en: "Judgement", image: "cards/20-2.png" },
-  { number: "21", jp: "世界", en: "The World", image: "cards/21-1.png" },
-  { number: "21", jp: "世界", en: "The World", image: "cards/21-2.png" },
-];
+    const cards = [{"number": "0", "jp": "愚者", "en": "The Fool", "image": "cards/0-1.png"}, {"number": "0", "jp": "愚者", "en": "The Fool", "image": "cards/0-2.png"}, {"number": "1", "jp": "魔術師", "en": "The Magician", "image": "cards/1-1.png"}, {"number": "1", "jp": "魔術師", "en": "The Magician", "image": "cards/1-2.png"}, {"number": "2", "jp": "女教皇", "en": "The High Priestess", "image": "cards/2-1.png"}, {"number": "2", "jp": "女教皇", "en": "The High Priestess", "image": "cards/2-2.png"}, {"number": "3", "jp": "女帝", "en": "The Empress", "image": "cards/3-1.png"}, {"number": "3", "jp": "女帝", "en": "The Empress", "image": "cards/3-2.png"}, {"number": "4", "jp": "皇帝", "en": "The Emperor", "image": "cards/4-1.png"}, {"number": "4", "jp": "皇帝", "en": "The Emperor", "image": "cards/4-2.png"}, {"number": "5", "jp": "法王", "en": "The Hierophant", "image": "cards/5-1.png"}, {"number": "5", "jp": "法王", "en": "The Hierophant", "image": "cards/5-2.png"}, {"number": "6", "jp": "恋人", "en": "The Lovers", "image": "cards/6-1.png"}, {"number": "6", "jp": "恋人", "en": "The Lovers", "image": "cards/6-2.png"}, {"number": "7", "jp": "戦車", "en": "The Chariot", "image": "cards/7-1.png"}, {"number": "7", "jp": "戦車", "en": "The Chariot", "image": "cards/7-2.png"}, {"number": "8", "jp": "力", "en": "Strength", "image": "cards/8-1.png"}, {"number": "8", "jp": "力", "en": "Strength", "image": "cards/8-2.png"}, {"number": "9", "jp": "隠者", "en": "The Hermit", "image": "cards/9-1.png"}, {"number": "9", "jp": "隠者", "en": "The Hermit", "image": "cards/9-2.png"}, {"number": "10", "jp": "運命の輪", "en": "Wheel of Fortune", "image": "cards/10-1.png"}, {"number": "10", "jp": "運命の輪", "en": "Wheel of Fortune", "image": "cards/10-2.png"}, {"number": "11", "jp": "正義", "en": "Justice", "image": "cards/11-1.png"}, {"number": "11", "jp": "正義", "en": "Justice", "image": "cards/11-2.png"}, {"number": "12", "jp": "吊るされた男", "en": "The Hanged Man", "image": "cards/12-1.png"}, {"number": "12", "jp": "吊るされた男", "en": "The Hanged Man", "image": "cards/12-2.png"}, {"number": "13", "jp": "死神", "en": "Death", "image": "cards/13-1.png"}, {"number": "13", "jp": "死神", "en": "Death", "image": "cards/13-2.png"}, {"number": "14", "jp": "節制", "en": "Temperance", "image": "cards/14-1.png"}, {"number": "14", "jp": "節制", "en": "Temperance", "image": "cards/14-2.png"}, {"number": "15", "jp": "悪魔", "en": "The Devil", "image": "cards/15-1.png"}, {"number": "15", "jp": "悪魔", "en": "The Devil", "image": "cards/15-2.png"}, {"number": "16", "jp": "塔", "en": "The Tower", "image": "cards/16-1.png"}, {"number": "16", "jp": "塔", "en": "The Tower", "image": "cards/16-2.png"}, {"number": "17", "jp": "星", "en": "The Star", "image": "cards/17-1.png"}, {"number": "17", "jp": "星", "en": "The Star", "image": "cards/17-2.png"}, {"number": "18", "jp": "月", "en": "The Moon", "image": "cards/18-1.png"}, {"number": "18", "jp": "月", "en": "The Moon", "image": "cards/18-2.png"}, {"number": "19", "jp": "太陽", "en": "The Sun", "image": "cards/19-1.png"}, {"number": "19", "jp": "太陽", "en": "The Sun", "image": "cards/19-2.png"}, {"number": "20", "jp": "審判", "en": "Judgement", "image": "cards/20-1.png"}, {"number": "20", "jp": "審判", "en": "Judgement", "image": "cards/20-2.png"}, {"number": "21", "jp": "世界", "en": "The World", "image": "cards/21-1.png"}, {"number": "21", "jp": "世界", "en": "The World", "image": "cards/21-2.png"}];
 
+    function drawCard() {
+      const randomIndex = Math.floor(Math.random() * cards.length);
+      const card = cards[randomIndex];
 
-function drawCard() {
-  const randomIndex = Math.floor(Math.random() * cards.length);
-  const card = cards[randomIndex];
-  const image = document.getElementById('cardImage');
-  const info = document.getElementById('cardInfo');
-  const button = document.querySelector('.button');
+      document.getElementById('intro').style.display = 'none';
+      const cardArea = document.getElementById('cardArea');
+      cardArea.style.display = 'flex';
 
-  image.src = card.image;
-  image.style.display = 'block';
-  info.innerHTML = `No.` + card.number + `<br>` + card.jp + `<br>` + card.en;
-  button.innerText = "カードをもう一枚引く";
-}
+      const image = document.getElementById('cardImage');
+      const info = document.getElementById('cardInfo');
+
+      image.src = card.image;
+      info.innerHTML = `No.` + card.number + `<br>` + card.jp + `<br>` + card.en;
+    }
   </script>
 </body>
 </html>
