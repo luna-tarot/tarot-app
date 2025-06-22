@@ -3,24 +3,94 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>1枚引きタロット</title>
+  <title>INSIGHT TAROT</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap" rel="stylesheet">
   <style>
-    body { text-align: center; padding: 50px; background: #fff; font-family: sans-serif; }
-    button { font-size: 18px; padding: 10px 20px; }
-    img { max-width: 300px; margin-top: 30px; }
+    body {
+      background-color: #000;
+      color: #f0e6d2;
+      font-family: 'Noto Serif JP', serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 40px;
+      letter-spacing: 2px;
+    }
+
+    button {
+      font-size: 20px;
+      padding: 12px 30px;
+      background: none;
+      border: 2px solid #f0e6d2;
+      color: #f0e6d2;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #f0e6d2;
+      color: #000;
+    }
+
+    img {
+      max-width: 300px;
+      margin-top: 40px;
+      border: 3px solid #f0e6d2;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+
+    p {
+      margin-top: 20px;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
-  <h1>タロットカードを引いてみよう</h1>
+  <h1>INSIGHT TAROT</h1>
   <button onclick="drawCard()">カードを引く</button>
   <div id="result"></div>
 
   <script>
+    const tarotCards = [
+      { number: 0, jp: "愚者", en: "The Fool" },
+      { number: 1, jp: "魔術師", en: "The Magician" },
+      { number: 2, jp: "女教皇", en: "The High Priestess" },
+      { number: 3, jp: "女帝", en: "The Empress" },
+      { number: 4, jp: "皇帝", en: "The Emperor" },
+      { number: 5, jp: "教皇", en: "The Hierophant" },
+      { number: 6, jp: "恋人", en: "The Lovers" },
+      { number: 7, jp: "戦車", en: "The Chariot" },
+      { number: 8, jp: "力", en: "Strength" },
+      { number: 9, jp: "隠者", en: "The Hermit" },
+      { number: 10, jp: "運命の輪", en: "Wheel of Fortune" },
+      { number: 11, jp: "正義", en: "Justice" },
+      { number: 12, jp: "吊るされた男", en: "The Hanged Man" },
+      { number: 13, jp: "死神", en: "Death" },
+      { number: 14, jp: "節制", en: "Temperance" },
+      { number: 15, jp: "悪魔", en: "The Devil" },
+      { number: 16, jp: "塔", en: "The Tower" },
+      { number: 17, jp: "星", en: "The Star" },
+      { number: 18, jp: "月", en: "The Moon" },
+      { number: 19, jp: "太陽", en: "The Sun" },
+      { number: 20, jp: "審判", en: "Judgement" },
+      { number: 21, jp: "世界", en: "The World" }
+    ];
+
     function drawCard() {
       const number = Math.floor(Math.random() * 22);
       const position = Math.random() < 0.5 ? 1 : 2;
       const imgSrc = `cards/${number}-${position}.png`;
-      document.getElementById('result').innerHTML = `<img src="${imgSrc}" alt="タロットカード">`;
+
+      const positionLabel = position === 1 ? "正位置" : "逆位置";
+      const card = tarotCards[number];
+
+      document.getElementById('result').innerHTML = `
+        <img src="${imgSrc}" alt="タロットカード">
+        <p>No.${card.number}｜${card.jp} - ${card.en}｜${positionLabel}</p>
+      `;
     }
   </script>
 </body>
