@@ -2,44 +2,101 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LUNA LINK</title>
-    <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Hiragino Mincho ProN', serif;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .footer-text {
-            position: absolute;
-            bottom: 20px;
-            text-align: center;
-            line-height: 1.6;
-        }
-        .app-name {
-            font-size: 1.5em;
-            font-weight: bold;
-            letter-spacing: 0.1em;
-        }
-        .credit {
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LUNA LINK</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: "Hiragino Mincho ProN", serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+    .container {
+      padding-top: 40px;
+    }
+    .title {
+      font-size: 1.6em;
+      margin-bottom: 10px;
+      letter-spacing: 0.1em;
+    }
+    .subtitle {
+      font-size: 1em;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+    .draw-button {
+      padding: 12px 24px;
+      font-size: 1em;
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 6px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .draw-button:hover {
+      background-color: #444;
+    }
+    .footer-text {
+      text-align: center;
+      padding-bottom: 10px;
+      line-height: 1.4;
+    }
+    .app-name {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .credit {
+      font-size: 0.8em;
+      opacity: 0.7;
+    }
+    #card-result img {
+      width: 240px;
+      margin-bottom: 10px;
+    }
+    #card-result {
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-    <footer>
-        <div class="footer-text">
-            <div class="app-name">- LUNA LINK -</div>
-            <div class="credit">by INSIGHT TAROT</div>
-        </div>
-    </footer>
+  <div class="container" id="main-content">
+    <div class="title" id="app-title">- INSIGHT TAROT -</div>
+    <div class="subtitle" id="instructions">心を落ち着けて<br>１枚引いてみましょう</div>
+    <button class="draw-button" id="draw-button" onclick="drawCard()">カードを引く</button>
+    <div id="card-result"></div>
+  </div>
+
+  <footer class="footer-text">
+    <div class="app-name">- LUNA LINK -</div>
+    <div class="credit">by INSIGHT TAROT</div>
+  </footer>
+
+  <script>
+    const cards = [
+      { name: "愚者", image: "cards/0-1.png" },
+      { name: "魔術師", image: "cards/1-1.png" },
+      // ... 残りは省略。実際は全44枚をここに記述。
+    ];
+
+    function drawCard() {
+      const i = Math.floor(Math.random() * cards.length);
+      const card = cards[i];
+      document.getElementById("card-result").innerHTML = `
+        <img src="${card.image}" alt="${card.name}">
+        <div>${card.name}</div>
+      `;
+      document.getElementById("instructions").style.display = "none";
+      document.getElementById("app-title").style.marginBottom = "20px";
+    }
+  </script>
 </body>
 </html>
