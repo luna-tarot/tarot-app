@@ -46,6 +46,16 @@
       margin-top: 20px;
       font-size: 18px;
     }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -88,8 +98,8 @@
       const card = tarotCards[number];
 
       document.getElementById('result').innerHTML = `
-        <img src="${imgSrc}" alt="タロットカード">
-        <p>No.${card.number}｜${card.jp} - ${card.en}｜${positionLabel}</p>
+        <img src="${imgSrc}" alt="タロットカード" class="fade-in">
+        <p class="fade-in">No.${card.number}｜${card.jp} - ${card.en}｜${positionLabel}</p>
       `;
     }
   </script>
