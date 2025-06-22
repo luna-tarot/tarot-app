@@ -3,7 +3,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>LUNA - INSIGHT TAROT</title>
+  <title>INSIGHT TAROT</title>
   <style>
     body {
       background-color: #000;
@@ -11,17 +11,27 @@
       font-family: "Hiragino Mincho ProN", "游明朝", "Yu Mincho", serif;
       text-align: center;
       padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    h1 {
-      font-size: 2.2em;
-      margin-bottom: 0.4em;
+    header {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #ccc;
+      margin-bottom: 2em;
       letter-spacing: 0.1em;
     }
+    .main {
+      flex-grow: 1;
+    }
     h2 {
-      font-size: 1.2em;
+      font-size: 1.1em;
       font-weight: normal;
+      margin-top: 2em;
       margin-bottom: 2em;
       color: #ccc;
+      white-space: pre-line;
     }
     button {
       background-color: #444;
@@ -33,7 +43,7 @@
       margin-bottom: 30px;
     }
     img {
-      width: clamp(140px, 35vw, 240px);
+      width: clamp(180px, 45vw, 320px);
       height: auto;
       margin-bottom: 20px;
     }
@@ -42,15 +52,25 @@
       line-height: 1.6;
       white-space: pre-line;
     }
+    footer {
+      font-size: 1em;
+      color: #aaa;
+      margin-top: 40px;
+      padding-top: 20px;
+    }
   </style>
 </head>
 <body>
-  <h1>LUNA</h1>
-  <h2>- INSIGHT TAROT -</h2>
-  <p style="margin-bottom: 2em; white-space: pre-line;">心を落ち着けて
-１枚引いてみましょう</p>
-  <button onclick="drawCard()">カードを引く</button>
-  <div id="result"></div>
+  <header>- INSIGHT TAROT -</header>
+
+  <div class="main">
+    <h2>心を落ち着けて
+１枚引いてみましょう</h2>
+    <button onclick="drawCard()">カードを引く</button>
+    <div id="result"></div>
+  </div>
+
+  <footer>by LUNA</footer>
 
   <script>
     const cards = [
