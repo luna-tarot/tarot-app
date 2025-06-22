@@ -1,119 +1,127 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LUNA LINK</title>
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: "Hiragino Mincho ProN", serif;
-      height: 100%;
-      overflow: hidden;
-    }
-    .container {
+      background-color: black;
+      color: white;
+      font-family: 'Hiragino Mincho ProN', serif;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      height: calc(100% - 60px);
-      text-align: center;
-      padding: 20px;
-      box-sizing: border-box;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .card {
+      max-height: 60vh;
+      max-width: 80vw;
+      margin-bottom: 1vh;
     }
     .title {
-      font-size: 1.1em;
-      margin-bottom: 0.3em;
+      font-size: 1.5rem;
+      margin: 0.5rem 0;
+      text-align: center;
     }
     .subtitle {
-      font-size: 0.95em;
-      margin-bottom: 1.5em;
-      line-height: 1.5;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
     }
-    .draw-button {
-      padding: 12px 24px;
-      font-size: 1em;
-      background-color: #6a0dad;
+    .button {
+      background: #6a0dad;
+      color: white;
       border: none;
-      border-radius: 6px;
-      color: #fff;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border-radius: 5px;
       cursor: pointer;
-      transition: box-shadow 0.4s ease;
+      transition: box-shadow 0.3s ease-in-out;
     }
-    .draw-button:hover {
-      box-shadow: 0 0 16px 4px rgba(255, 255, 255, 0.4);
+    .button:hover {
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
     }
     .footer {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
       text-align: center;
-      font-size: 0.9em;
-      padding: 10px 0;
-    }
-    .footer .app-name {
-      font-weight: bold;
-    }
-    .card-display img {
-      width: 60vw;
-      max-width: 260px;
-      height: auto;
-      margin-bottom: 0.5em;
-    }
-    .card-info {
-      font-size: 0.95em;
-      margin-bottom: 1em;
-      line-height: 1.4;
-    }
-    @media (max-height: 700px) {
-      .card-display img {
-        width: 50vw;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="container" id="main">
-    <div id="initial">
-      <div class="title">心を落ち着かせて</div>
-      <div class="subtitle">１枚引いてみましょう</div>
-      <button class="draw-button" onclick="drawCard()">カードを引く</button>
-    </div>
-    <div id="result" style="display:none;">
-      <div class="card-display">
-        <img id="card-image" src="" alt="カード画像">
-      </div>
-      <div class="card-info">
-        <div id="card-number">カード番号</div>
-        <div id="card-jp">カード名（日本語）</div>
-        <div id="card-en">Card Name (English)</div>
-      </div>
-      <button class="draw-button" onclick="drawCard()">カードをもう一枚引く</button>
-    </div>
+  <div id="content">
+    <div class="title">- INSIGHT TAROT -</div>
+    <div class="subtitle">心を落ち着けて<br>１枚引いてみましょう</div>
+    <button class="button" onclick="drawCard()">カードを引く</button>
+    <img id="cardImage" class="card" src="" alt="" style="display:none;">
+    <div id="cardInfo" class="subtitle"></div>
+    <div class="footer">- LUNA LINK -<br>by INSIGHT TAROT</div>
   </div>
-  <div class="footer">
-    <div class="app-name">- LUNA LINK -</div>
-    <div>by INSIGHT TAROT</div>
-  </div>
-
   <script>
-    const cards = [
-      { number: "0", jp: "愚者", en: "The Fool", image: "cards/0-1.png" },
-      { number: "1", jp: "魔術師", en: "The Magician", image: "cards/1-1.png" }
-      // 全44枚をここに追加
-    ];
+const cards = [
+  { number: "0", jp: "愚者", en: "The Fool", image: "cards/0-1.png" },
+  { number: "0", jp: "愚者", en: "The Fool", image: "cards/0-2.png" },
+  { number: "1", jp: "魔術師", en: "The Magician", image: "cards/1-1.png" },
+  { number: "1", jp: "魔術師", en: "The Magician", image: "cards/1-2.png" },
+  { number: "2", jp: "女教皇", en: "The High Priestess", image: "cards/2-1.png" },
+  { number: "2", jp: "女教皇", en: "The High Priestess", image: "cards/2-2.png" },
+  { number: "3", jp: "女帝", en: "The Empress", image: "cards/3-1.png" },
+  { number: "3", jp: "女帝", en: "The Empress", image: "cards/3-2.png" },
+  { number: "4", jp: "皇帝", en: "The Emperor", image: "cards/4-1.png" },
+  { number: "4", jp: "皇帝", en: "The Emperor", image: "cards/4-2.png" },
+  { number: "5", jp: "法王", en: "The Hierophant", image: "cards/5-1.png" },
+  { number: "5", jp: "法王", en: "The Hierophant", image: "cards/5-2.png" },
+  { number: "6", jp: "恋人", en: "The Lovers", image: "cards/6-1.png" },
+  { number: "6", jp: "恋人", en: "The Lovers", image: "cards/6-2.png" },
+  { number: "7", jp: "戦車", en: "The Chariot", image: "cards/7-1.png" },
+  { number: "7", jp: "戦車", en: "The Chariot", image: "cards/7-2.png" },
+  { number: "8", jp: "力", en: "Strength", image: "cards/8-1.png" },
+  { number: "8", jp: "力", en: "Strength", image: "cards/8-2.png" },
+  { number: "9", jp: "隠者", en: "The Hermit", image: "cards/9-1.png" },
+  { number: "9", jp: "隠者", en: "The Hermit", image: "cards/9-2.png" },
+  { number: "10", jp: "運命の輪", en: "Wheel of Fortune", image: "cards/10-1.png" },
+  { number: "10", jp: "運命の輪", en: "Wheel of Fortune", image: "cards/10-2.png" },
+  { number: "11", jp: "正義", en: "Justice", image: "cards/11-1.png" },
+  { number: "11", jp: "正義", en: "Justice", image: "cards/11-2.png" },
+  { number: "12", jp: "吊るされた男", en: "The Hanged Man", image: "cards/12-1.png" },
+  { number: "12", jp: "吊るされた男", en: "The Hanged Man", image: "cards/12-2.png" },
+  { number: "13", jp: "死神", en: "Death", image: "cards/13-1.png" },
+  { number: "13", jp: "死神", en: "Death", image: "cards/13-2.png" },
+  { number: "14", jp: "節制", en: "Temperance", image: "cards/14-1.png" },
+  { number: "14", jp: "節制", en: "Temperance", image: "cards/14-2.png" },
+  { number: "15", jp: "悪魔", en: "The Devil", image: "cards/15-1.png" },
+  { number: "15", jp: "悪魔", en: "The Devil", image: "cards/15-2.png" },
+  { number: "16", jp: "塔", en: "The Tower", image: "cards/16-1.png" },
+  { number: "16", jp: "塔", en: "The Tower", image: "cards/16-2.png" },
+  { number: "17", jp: "星", en: "The Star", image: "cards/17-1.png" },
+  { number: "17", jp: "星", en: "The Star", image: "cards/17-2.png" },
+  { number: "18", jp: "月", en: "The Moon", image: "cards/18-1.png" },
+  { number: "18", jp: "月", en: "The Moon", image: "cards/18-2.png" },
+  { number: "19", jp: "太陽", en: "The Sun", image: "cards/19-1.png" },
+  { number: "19", jp: "太陽", en: "The Sun", image: "cards/19-2.png" },
+  { number: "20", jp: "審判", en: "Judgement", image: "cards/20-1.png" },
+  { number: "20", jp: "審判", en: "Judgement", image: "cards/20-2.png" },
+  { number: "21", jp: "世界", en: "The World", image: "cards/21-1.png" },
+  { number: "21", jp: "世界", en: "The World", image: "cards/21-2.png" },
+];
 
-    function drawCard() {
-      const i = Math.floor(Math.random() * cards.length);
-      const card = cards[i];
-      document.getElementById("initial").style.display = "none";
-      document.getElementById("result").style.display = "block";
-      document.getElementById("card-image").src = card.image;
-      document.getElementById("card-number").innerText = "No. " + card.number;
-      document.getElementById("card-jp").innerText = card.jp;
-      document.getElementById("card-en").innerText = card.en;
-    }
+
+function drawCard() {
+  const randomIndex = Math.floor(Math.random() * cards.length);
+  const card = cards[randomIndex];
+  const image = document.getElementById('cardImage');
+  const info = document.getElementById('cardInfo');
+  const button = document.querySelector('.button');
+
+  image.src = card.image;
+  image.style.display = 'block';
+  info.innerHTML = `No.` + card.number + `<br>` + card.jp + `<br>` + card.en;
+  button.innerText = "カードをもう一枚引く";
+}
   </script>
 </body>
 </html>
