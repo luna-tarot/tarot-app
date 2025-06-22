@@ -13,6 +13,7 @@
       background-color: #000;
       color: #fff;
       font-family: "Hiragino Mincho ProN", "游明朝", "Yu Mincho", serif;
+      overflow: hidden;
     }
     body {
       display: flex;
@@ -23,19 +24,21 @@
       box-sizing: border-box;
       padding: 8px 6px;
     }
-    header {
-      font-size: 1em;
-      font-weight: bold;
-      color: #ccc;
-      letter-spacing: 0.1em;
-      margin: 4px 0 2px;
+    #result img.card {
+      width: 60vw;
+      max-width: 260px;
+      height: auto;
+      animation: fadeIn 1.2s ease forwards;
+      opacity: 0;
     }
-    h2 {
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    .result-text {
       font-size: 0.9em;
-      font-weight: normal;
-      margin: 2px 0 6px;
-      color: #ccc;
+      line-height: 1.4;
       white-space: pre-line;
+      margin-top: 4px;
     }
     button {
       background-color: transparent;
@@ -67,44 +70,42 @@
     button:hover {
       text-shadow: 0 0 8px rgba(255, 200, 255, 0.8);
     }
-    #result img.card {
-      width: 60vw;
-      max-width: 260px;
-      height: auto;
-      margin-top: 4px;
-      animation: fadeIn 1.2s ease forwards;
-      opacity: 0;
+    header {
+      font-size: 1em;
+      font-weight: bold;
+      color: #ccc;
+      letter-spacing: 0.1em;
+      margin: 4px 0 0;
     }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-    .result-text {
+    h2 {
       font-size: 0.9em;
-      line-height: 1.4;
+      font-weight: normal;
+      margin: 2px 0 6px;
+      color: #ccc;
       white-space: pre-line;
-      margin-top: 4px;
     }
     footer {
       font-size: 0.8em;
       color: #aaa;
-      margin-bottom: 2px;
+      margin: 4px 0;
     }
     .middle {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: start;
       flex-grow: 1;
+      overflow: hidden;
     }
   </style>
 </head>
 <body>
-  <header>- INSIGHT TAROT -</header>
   <div class="middle">
-    <h2>心を落ち着けて
+    <h2 id="instruction">心を落ち着けて
 １枚引いてみましょう</h2>
-    <button onclick="drawCard()">カードを引く</button>
     <div id="result"></div>
+    <button onclick="drawCard()">カードを引く</button>
+    <header id="title">- INSIGHT TAROT -</header>
   </div>
   <footer>by LUNA</footer>
 
@@ -154,6 +155,8 @@
 
       resultDiv.appendChild(img);
       resultDiv.appendChild(textDiv);
+
+      document.getElementById('instruction').style.display = 'none';
     }
   </script>
 </body>
