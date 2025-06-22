@@ -6,35 +6,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LUNA LINK</title>
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       background-color: #000;
       color: #fff;
       font-family: "Hiragino Mincho ProN", serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
+      height: 100%;
+      overflow: hidden;
     }
     .container {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex: 1;
+      height: calc(100% - 60px);
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
     }
     .title {
-      font-size: 1.6em;
-      margin-bottom: 10px;
-      letter-spacing: 0.1em;
+      font-size: 1.1em;
+      margin-bottom: 0.3em;
     }
     .subtitle {
-      font-size: 1em;
-      margin-bottom: 30px;
-      line-height: 1.6;
+      font-size: 0.95em;
+      margin-bottom: 1.5em;
+      line-height: 1.5;
     }
     .draw-button {
       padding: 12px 24px;
@@ -44,72 +42,77 @@
       border-radius: 6px;
       color: #fff;
       cursor: pointer;
-      box-shadow: 0 0 8px #6a0dad, 0 0 16px #6a0dad;
-      transition: all 0.3s ease;
-      animation: pulse 2s infinite;
-      margin-top: 20px;
+      transition: box-shadow 0.4s ease;
     }
     .draw-button:hover {
-      background-color: #7b1fa2;
+      box-shadow: 0 0 16px 4px rgba(255, 255, 255, 0.4);
     }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 8px #6a0dad, 0 0 16px #6a0dad; }
-      50% { box-shadow: 0 0 16px #9c27b0, 0 0 32px #9c27b0; }
-      100% { box-shadow: 0 0 8px #6a0dad, 0 0 16px #6a0dad; }
-    }
-    .footer-text {
+    .footer {
       text-align: center;
-      padding-bottom: 10px;
-      line-height: 1.4;
+      font-size: 0.9em;
+      padding: 10px 0;
     }
-    .app-name {
-      font-size: 1.2em;
+    .footer .app-name {
       font-weight: bold;
     }
-    .credit {
-      font-size: 0.8em;
-      opacity: 0.7;
+    .card-display img {
+      width: 60vw;
+      max-width: 260px;
+      height: auto;
+      margin-bottom: 0.5em;
     }
-    #card-result img {
-      width: 240px;
-      margin-bottom: 10px;
+    .card-info {
+      font-size: 0.95em;
+      margin-bottom: 1em;
+      line-height: 1.4;
     }
-    #card-result {
-      margin-top: 30px;
+    @media (max-height: 700px) {
+      .card-display img {
+        width: 50vw;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container" id="main-content">
-    <div class="title" id="app-title">- INSIGHT TAROT -</div>
-    <div class="subtitle" id="instructions">心を落ち着けて<br>１枚引いてみましょう</div>
-    <button class="draw-button" id="draw-button" onclick="drawCard()">カードを引く</button>
-    <div id="card-result"></div>
+  <div class="container" id="main">
+    <div id="initial">
+      <div class="title">心を落ち着かせて</div>
+      <div class="subtitle">１枚引いてみましょう</div>
+      <button class="draw-button" onclick="drawCard()">カードを引く</button>
+    </div>
+    <div id="result" style="display:none;">
+      <div class="card-display">
+        <img id="card-image" src="" alt="カード画像">
+      </div>
+      <div class="card-info">
+        <div id="card-number">カード番号</div>
+        <div id="card-jp">カード名（日本語）</div>
+        <div id="card-en">Card Name (English)</div>
+      </div>
+      <button class="draw-button" onclick="drawCard()">カードをもう一枚引く</button>
+    </div>
   </div>
-
-  <footer class="footer-text">
+  <div class="footer">
     <div class="app-name">- LUNA LINK -</div>
-    <div class="credit">by INSIGHT TAROT</div>
-  </footer>
+    <div>by INSIGHT TAROT</div>
+  </div>
 
   <script>
     const cards = [
-      { name: "愚者", image: "cards/0-1.png" },
-      { name: "魔術師", image: "cards/1-1.png" }
-      // 実際は全44枚のリストをここに追加
+      { number: "0", jp: "愚者", en: "The Fool", image: "cards/0-1.png" },
+      { number: "1", jp: "魔術師", en: "The Magician", image: "cards/1-1.png" }
+      // 全44枚をここに追加
     ];
 
     function drawCard() {
       const i = Math.floor(Math.random() * cards.length);
       const card = cards[i];
-      document.getElementById("card-result").innerHTML = `
-        <img src="${card.image}" alt="${card.name}">
-        <div>${card.name}</div>
-        <button class="draw-button" onclick="drawCard()">カードをもう一度引く</button>
-      `;
-      document.getElementById("draw-button").style.display = "none";
-      document.getElementById("instructions").style.display = "none";
-      document.getElementById("app-title").style.marginBottom = "20px";
+      document.getElementById("initial").style.display = "none";
+      document.getElementById("result").style.display = "block";
+      document.getElementById("card-image").src = card.image;
+      document.getElementById("card-number").innerText = "No. " + card.number;
+      document.getElementById("card-jp").innerText = card.jp;
+      document.getElementById("card-en").innerText = card.en;
     }
   </script>
 </body>
