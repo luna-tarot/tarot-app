@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>1枚引きタロット</title>
+  <style>
+    body { text-align: center; padding: 50px; background: #fff; font-family: sans-serif; }
+    button { font-size: 18px; padding: 10px 20px; }
+    img { max-width: 300px; margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <h1>タロットカードを引いてみよう</h1>
+  <button onclick="drawCard()">カードを引く</button>
+  <div id="result"></div>
+
+  <script>
+    function drawCard() {
+      const number = Math.floor(Math.random() * 22);
+      const position = Math.random() < 0.5 ? 1 : 2;
+      const imgSrc = `cards/${number}-${position}.png`;
+      document.getElementById('result').innerHTML = `<img src="${imgSrc}" alt="タロットカード">`;
+    }
+  </script>
+</body>
+</html>
