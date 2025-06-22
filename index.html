@@ -3,7 +3,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>INSIGHT TAROT - タロットを引く</title>
+  <title>LUNA - INSIGHT TAROT</title>
   <style>
     body {
       background-color: #000;
@@ -13,9 +13,15 @@
       padding: 40px 20px;
     }
     h1 {
-      font-size: 2em;
-      margin-bottom: 1em;
+      font-size: 2.2em;
+      margin-bottom: 0.4em;
       letter-spacing: 0.1em;
+    }
+    h2 {
+      font-size: 1.2em;
+      font-weight: normal;
+      margin-bottom: 2em;
+      color: #ccc;
     }
     button {
       background-color: #444;
@@ -24,17 +30,12 @@
       font-size: 1.1em;
       border: none;
       cursor: pointer;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
     img {
-      max-width: 90%;
+      width: clamp(140px, 35vw, 240px);
       height: auto;
       margin-bottom: 20px;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-    .fade-in {
-      opacity: 1;
     }
     .result-text {
       font-size: 1.2em;
@@ -44,7 +45,10 @@
   </style>
 </head>
 <body>
-  <h1>1枚引いてみましょう</h1>
+  <h1>LUNA</h1>
+  <h2>- INSIGHT TAROT -</h2>
+  <p style="margin-bottom: 2em; white-space: pre-line;">心を落ち着けて
+１枚引いてみましょう</p>
   <button onclick="drawCard()">カードを引く</button>
   <div id="result"></div>
 
@@ -86,9 +90,6 @@
 
       const img = document.createElement('img');
       img.src = imgSrc;
-      img.onload = () => {
-        img.classList.add('fade-in');
-      };
 
       const textDiv = document.createElement('div');
       textDiv.className = 'result-text';
