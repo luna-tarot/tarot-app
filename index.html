@@ -108,11 +108,12 @@
   <div class="middle">
     <h2 id="instruction">心を落ち着けて
 １枚引いてみましょう</h2>
+    <button id="initialDraw" onclick="drawCard()">カードを引く</button>
 
     <div id="result">
       <img id="cardImage" class="card" src="" alt="カード画像">
       <div id="cardText" class="result-text"></div>
-      <button id="drawButton" onclick="drawCard()">もう一度カードを引く</button>
+      <button onclick="drawCard()">もう一度カードを引く</button>
     </div>
 
     <header id="title">- INSIGHT TAROT -</header>
@@ -152,17 +153,14 @@
       const positionLabel = isReversed ? "逆位置" : "正位置";
       const imgSrc = `cards/${index}.png`;
 
-      const cardImage = document.getElementById('cardImage');
-      const cardText = document.getElementById('cardText');
-      const resultDiv = document.getElementById('result');
-
-      cardImage.src = imgSrc;
-      cardText.innerText = `No.${card.number}
+      document.getElementById('cardImage').src = imgSrc;
+      document.getElementById('cardText').innerText = `No.${card.number}
 ${card.jp} - ${card.en}
 ${positionLabel}`;
 
       document.getElementById('instruction').style.display = 'none';
-      resultDiv.style.display = 'flex';
+      document.getElementById('initialDraw').style.display = 'none';
+      document.getElementById('result').style.display = 'flex';
     }
   </script>
 </body>
