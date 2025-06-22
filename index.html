@@ -20,7 +20,11 @@
       text-align: center;
     }
     .container {
-      padding-top: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
     }
     .title {
       font-size: 1.6em;
@@ -35,15 +39,23 @@
     .draw-button {
       padding: 12px 24px;
       font-size: 1em;
-      background: transparent;
-      border: 2px solid #fff;
+      background-color: #6a0dad;
+      border: none;
       border-radius: 6px;
       color: #fff;
       cursor: pointer;
+      box-shadow: 0 0 8px #6a0dad, 0 0 16px #6a0dad;
       transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+      margin-top: 20px;
     }
     .draw-button:hover {
-      background-color: #444;
+      background-color: #7b1fa2;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 8px #6a0dad, 0 0 16px #6a0dad; }
+      50% { box-shadow: 0 0 16px #9c27b0, 0 0 32px #9c27b0; }
+      100% { box-shadow: 0 0 8px #6a0dad, 0 0 16px #6a0dad; }
     }
     .footer-text {
       text-align: center;
@@ -83,8 +95,8 @@
   <script>
     const cards = [
       { name: "愚者", image: "cards/0-1.png" },
-      { name: "魔術師", image: "cards/1-1.png" },
-      // ... 残りは省略。実際は全44枚をここに記述。
+      { name: "魔術師", image: "cards/1-1.png" }
+      // 実際は全44枚のリストをここに追加
     ];
 
     function drawCard() {
@@ -93,7 +105,9 @@
       document.getElementById("card-result").innerHTML = `
         <img src="${card.image}" alt="${card.name}">
         <div>${card.name}</div>
+        <button class="draw-button" onclick="drawCard()">カードをもう一度引く</button>
       `;
+      document.getElementById("draw-button").style.display = "none";
       document.getElementById("instructions").style.display = "none";
       document.getElementById("app-title").style.marginBottom = "20px";
     }
